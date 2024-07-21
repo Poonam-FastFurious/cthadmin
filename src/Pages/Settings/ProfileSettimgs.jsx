@@ -129,7 +129,8 @@ function ProfileSettimgs() {
     })
       .then((response) => {
         if (!response.ok) {
-          throw new Error("Failed to change password");
+          // throw new Error("Failed to change password");
+           setError(data.message || "An error occurred. Please try again.");
         }
         return response.json();
       })
