@@ -5,14 +5,27 @@ import Sidebar from "./Sidebar";
 import { useEffect } from "react";
 import { Baseurl } from "../../Confige";
 import Swal from "sweetalert2";
+import { jwtDecode } from "jwt-decode";
 function Header() {
   const navigate = useNavigate();
+  const checkTokenExpiration = (token) => {
+    try {
+      const decodedToken = jwtDecode(token);
+      const currentTime = Date.now() / 1000;
+      return decodedToken.exp < currentTime;
+    } catch (error) {
+      console.error("Token decoding failed", error);
+      return true; // Assume token is expired if decoding fails
+    }
+  };
+
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
-    if (!token) {
+    if (!token || checkTokenExpiration(token)) {
       navigate("/Login");
     }
-  });
+  }, [navigate]);
+
   const handleConfirmLogout = async () => {
     try {
       const result = await Swal.fire({
@@ -52,6 +65,9 @@ function Header() {
     } catch (error) {
       console.error("Logout failed", error);
     }
+  };
+  const handleLockScreen = () => {
+    localStorage.removeItem("accessToken");
   };
   return (
     <>
@@ -167,7 +183,11 @@ function Header() {
                       <i className="mdi mdi-cog-outline text-muted fs-16 align-middle me-1"></i>
                       <span className="align-middle">Settings</span>
                     </Link>
-                    <Link className="dropdown-item" to="/Lock">
+                    <Link
+                      className="dropdown-item"
+                      to="/Lock"
+                      onClick={handleLockScreen}
+                    >
                       <i className="mdi mdi-lock text-muted fs-16 align-middle me-1"></i>
                       <span className="align-middle">Lock screen</span>
                     </Link>
