@@ -380,14 +380,30 @@ function Addblogs() {
                                 >
                                   Blogs category
                                 </label>
-                                <input
-                                  type="text"
+                                <select
                                   className="form-control"
-                                  id="manufacturer-name-input"
-                                  placeholder="Enter manufacturer name"
+                                  name="type"
+                                  id="type"
+                                  required
                                   value={category}
                                   onChange={(e) => setCategory(e.target.value)}
-                                />
+                                >
+                                  <option value="">Select Category</option>
+                                  <option value="CSR">CSR </option>
+                                  <option value="BRSR">BRSR </option>
+                                  <option value=" Corporate Governance">
+                                    {" "}
+                                    Corporate Governance{" "}
+                                  </option>
+                                  <option value=" Miscellaneous">
+                                    {" "}
+                                    Miscellaneous{" "}
+                                  </option>
+                                  <option value="contact">
+                                    {" "}
+                                    Corporate Mentoring, Learning & Development{" "}
+                                  </option>
+                                </select>
                               </div>
                             </div>
                             <div className="col-lg-3">
