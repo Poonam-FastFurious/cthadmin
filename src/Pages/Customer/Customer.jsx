@@ -33,6 +33,37 @@ function Customer() {
 
     return matchesSearch && matchesDate;
   });
+  const sortedUsers = filteredUsers.sort(
+    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+  );
+
+  const handleApprove = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Once approved, you won't be able to change this status!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, approve it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(`${Baseurl}/api/v1/user/approveuser?userId=${id}`, {
+          method: "PATCH",
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.success) {
+              fetchUsers();
+              toast.success("User approved successfully!");
+            } else {
+              toast.error("Failed to approve user.");
+            }
+          });
+      }
+    });
+  };
+
   const handleDelete = (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -238,13 +269,16 @@ function Customer() {
                               <th className="sort" data-sort="status">
                                 Status
                               </th>
+                              <th className="sort" data-sort="status">
+                                Status
+                              </th>
                               <th className="sort" data-sort="action">
                                 Action
                               </th>
                             </tr>
                           </thead>
                           <tbody className="list form-check-all">
-                            {filteredUsers.map((item, index) => (
+                            {sortedUsers.map((item, index) => (
                               <tr key={index}>
                                 <th scope="row">
                                   <div className="form-check">
@@ -272,10 +306,22 @@ function Customer() {
                                 <td className="phone">{item.contactNumber}</td>
 
                                 <td className="status">
-                                  <span className="badge bg-success-subtle text-success text-uppercase">
-                                    Active
+                                  <span
+                                    className={`badge text-uppercase ${
+                                      item.IsApproved
+                                        ? "bg-success-subtle text-success"
+                                        : "bg-warning-subtle text-warning"
+                                    }`}
+                                  >
+                                    {item.IsApproved ? "active" : "inactive"}
                                   </span>
                                 </td>
+                                <td className="date">
+                                  {new Date(
+                                    item.createdAt
+                                  ).toLocaleDateString()}
+                                </td>
+
                                 <td>
                                   <ul className="list-inline hstack gap-2 mb-0">
                                     <li
@@ -299,6 +345,17 @@ function Customer() {
                                       >
                                         <i className="ri-delete-bin-5-line"></i>
                                       </Link>
+                                    </li>
+                                    <li className="list-inline-item">
+                                      <button
+                                        className="btn btn-success btn-sm"
+                                        onClick={() => handleApprove(item._id)}
+                                        disabled={item.IsApproved}
+                                      >
+                                        {item.IsApproved
+                                          ? "Approved"
+                                          : "Approve"}
+                                      </button>
                                     </li>
                                   </ul>
                                 </td>
