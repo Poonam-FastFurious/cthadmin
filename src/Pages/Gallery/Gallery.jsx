@@ -220,18 +220,10 @@ function Gallery() {
                                   />
                                 </div>
                               </th>
-                              <th className="sort" data-sort="customer_name">
-                                Image
-                              </th>
-                              <th className="sort" data-sort="email">
-                                Title
-                              </th>
-                              <th className="sort" data-sort="email">
-                                Status
-                              </th>
-                              <th className="sort" data-sort="action">
-                                Action
-                              </th>
+                              <th data-sort="customer_name">Image</th>
+                              <th data-sort="email">Title</th>
+                              <th data-sort="email">Status</th>
+                              <th data-sort="action">Action</th>
                             </tr>
                           </thead>
                           <tbody className="list form-check-all">

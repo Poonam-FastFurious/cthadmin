@@ -250,31 +250,15 @@ function Customer() {
                                 </div>
                               </th>
 
-                              <th className="sort" data-sort="customer_name">
-                                UserName
-                              </th>
-                              <th className="sort" data-sort="customer_name">
-                                Firstname
-                              </th>
-                              <th className="sort" data-sort="date">
-                                Lastname
-                              </th>
-                              <th className="sort" data-sort="email">
-                                Email
-                              </th>
-                              <th className="sort" data-sort="phone">
-                                Phone
-                              </th>
+                              <th data-sort="customer_name">UserName</th>
+                              <th data-sort="customer_name">Firstname</th>
+                              <th data-sort="date">Lastname</th>
+                              <th data-sort="email">Email</th>
+                              <th data-sort="phone">Phone</th>
 
-                              <th className="sort" data-sort="status">
-                                Status
-                              </th>
-                              <th className="sort" data-sort="status">
-                                Status
-                              </th>
-                              <th className="sort" data-sort="action">
-                                Action
-                              </th>
+                              <th data-sort="status">Status</th>
+                              <th data-sort="status">Date</th>
+                              <th data-sort="action">Action</th>
                             </tr>
                           </thead>
                           <tbody className="list form-check-all">

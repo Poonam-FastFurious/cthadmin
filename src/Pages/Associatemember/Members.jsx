@@ -236,26 +236,14 @@ function Members() {
                                   />
                                 </div>
                               </th>
-                              <th className="sort" data-sort="customer_name">
-                                Members
-                              </th>
-                              <th className="sort" data-sort="email">
-                                Experience
-                              </th>
+                              <th data-sort="customer_name">Members</th>
+                              <th data-sort="email">Experience</th>
 
-                              <th className="sort" data-sort="date">
-                                Joining Date
-                              </th>
-                              <th className="sort" data-sort="status">
-                                Status
-                              </th>
-                              <th className="sort" data-sort="status">
-                                Designation
-                              </th>
+                              <th data-sort="date">Joining Date</th>
+                              <th data-sort="status">Status</th>
+                              <th data-sort="status">Designation</th>
 
-                              <th className="sort" data-sort="action">
-                                Action
-                              </th>
+                              <th data-sort="action">Action</th>
                             </tr>
                           </thead>
                           <tbody className="list form-check-all">

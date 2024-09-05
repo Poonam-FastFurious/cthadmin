@@ -97,7 +97,10 @@ function Dashboard() {
                                 Total users
                               </p>
                             </div>
-                            <div className="flex-shrink-0">
+                            <div
+                              className="flex-shrink-0 "
+                              style={{ visibility: "hidden" }}
+                            >
                               <h5 className="text-success fs-14 mb-0">
                                 <i className="ri-arrow-right-up-line fs-13 align-middle"></i>
                                 +16.24 %
@@ -140,7 +143,10 @@ function Dashboard() {
                                 Total Blogs
                               </p>
                             </div>
-                            <div className="flex-shrink-0">
+                            <div
+                              className="flex-shrink-0"
+                              style={{ visibility: "hidden" }}
+                            >
                               <h5 className="text-danger fs-14 mb-0">
                                 <i className="ri-arrow-right-down-line fs-13 align-middle"></i>
                                 -3.57 %
@@ -183,7 +189,10 @@ function Dashboard() {
                                 Total Read
                               </p>
                             </div>
-                            <div className="flex-shrink-0">
+                            <div
+                              className="flex-shrink-0"
+                              style={{ visibility: "hidden" }}
+                            >
                               <h5 className="text-success fs-14 mb-0">
                                 <i className="ri-arrow-right-up-line fs-13 align-middle"></i>
                                 +29.08 %
@@ -200,7 +209,11 @@ function Dashboard() {
                                   {totalViews}
                                 </span>
                               </h4>
-                              <Link to="" className="text-decoration-underline">
+                              <Link
+                                to=""
+                                className="text-decoration-underline"
+                                style={{ visibility: "hidden" }}
+                              >
                                 See details
                               </Link>
                             </div>
@@ -223,9 +236,6 @@ function Dashboard() {
                                 Total Comments
                               </p>
                             </div>
-                            <div className="flex-shrink-0">
-                              <h5 className="text-muted fs-14 mb-0">+0.00 %</h5>
-                            </div>
                           </div>
                           <div className="d-flex align-items-end justify-content-between mt-4">
                             <div>
@@ -237,7 +247,11 @@ function Dashboard() {
                                   {totalComments}
                                 </span>
                               </h4>
-                              <Link to="" className="text-decoration-underline">
+                              <Link
+                                to=""
+                                className="text-decoration-underline"
+                                style={{ visibility: "hidden" }}
+                              >
                                 See Comments
                               </Link>
                             </div>

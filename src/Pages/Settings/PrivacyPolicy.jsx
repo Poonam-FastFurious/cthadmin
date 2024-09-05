@@ -1,9 +1,10 @@
 import { useState } from "react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Baseurl } from "../../Confige";
+import Swal from "sweetalert2";
 
 function PrivacyPolicy() {
   const [version, setVersion] = useState("");
@@ -12,6 +13,7 @@ function PrivacyPolicy() {
   const [sectionTitle, setSectionTitle] = useState("");
   const [sectionContent, setSectionContent] = useState("");
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const handleVersionChange = (e) => {
     setVersion(e.target.value);
@@ -74,10 +76,23 @@ function PrivacyPolicy() {
         privacyPolicyData
       );
       console.log("Privacy Policy added:", response.data);
-      // Optionally, show a success message or redirect to another page
+
+      // SweetAlert2 success message
+      Swal.fire({
+        title: "Success!",
+        text: "Privacy Policy has been added successfully.",
+        icon: "success",
+        confirmButtonText: "OK",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // Redirect to another page after success
+          navigate("/PrivacyPolicy"); // Replace with your desired path
+        }
+      });
+
+      // Optionally, clear the form or redirect to another page
     } catch (error) {
       console.error("Error adding Privacy Policy:", error);
-      // Log the full error details
       if (error.response) {
         console.error("Server Error:", error.response.data);
       } else if (error.request) {

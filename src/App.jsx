@@ -23,6 +23,9 @@ import AddFAQ from "./Pages/Settings/AddFAQ";
 import ProfileSettimgs from "./Pages/Settings/ProfileSettimgs";
 import Lockscreen from "./Pages/Settings/Lockscreen";
 import EditBlogs from "./Pages/Blogs/EditBlogs";
+import Privacy from "./Pages/Settings/Privacy";
+import TermsandconList from "./Pages/Settings/TermsandconList";
+import Faqlist from "./Pages/Settings/Faqlist";
 function App() {
   return (
     <>
@@ -48,9 +51,12 @@ function App() {
             <Route path="/Members" element={<Members />} />
             <Route path="/Gallery" element={<Gallery />} />
             <Route path="/Profile" element={<Profile />} />
-            <Route path="/PrivacyPolicy" element={<PrivacyPolicy />} />
-            <Route path="/term-conditions" element={<Termsandcondition />} />
-            <Route path="/FAQ" element={<AddFAQ />} />
+            <Route path="/PrivacyPolicy" element={<Privacy />} />
+            <Route path="/Addprivacy" element={<PrivacyPolicy />} />
+            <Route path="/term-conditions" element={<TermsandconList />} />
+            <Route path="/addterms" element={<Termsandcondition />} />
+            <Route path="/FAQ" element={<Faqlist />} />
+            <Route path="/AddFAQ" element={<AddFAQ />} />
             <Route path="/Settings" element={<ProfileSettimgs />} />
           </Route>
         </Routes>
