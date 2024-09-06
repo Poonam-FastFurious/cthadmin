@@ -595,7 +595,7 @@ function ProfileSettimgs() {
                             )}
                           </div>
                         </form>
-                        <div className="mt-4 mb-3 border-bottom pb-2">
+                        {/* <div className="mt-4 mb-3 border-bottom pb-2">
                           <div className="float-end"></div>
                           <h5 className="card-title">Login History</h5>
                         </div>
@@ -610,7 +610,7 @@ function ProfileSettimgs() {
                               March 16 at 2:47PM
                             </p>
                           </div>
-                        </div>
+                        </div> */}
                       </div>
                     </div>
                   </div>

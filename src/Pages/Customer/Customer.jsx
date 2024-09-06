@@ -12,7 +12,7 @@ function Customer() {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterDate, setFilterDate] = useState("");
   const [editUser, setEditUser] = useState({});
-
+  const [isProcessing, setIsProcessing] = useState({});
   const fetchUsers = () => {
     fetch(Baseurl + "/api/v1/user/alluser")
       .then((response) => response.json())
@@ -38,6 +38,9 @@ function Customer() {
   );
 
   const handleApprove = (id) => {
+    // Set the processing state for this specific user
+    setIsProcessing((prev) => ({ ...prev, [id]: true }));
+
     Swal.fire({
       title: "Are you sure?",
       text: "Once approved, you won't be able to change this status!",
@@ -54,12 +57,22 @@ function Customer() {
           .then((response) => response.json())
           .then((data) => {
             if (data.success) {
-              fetchUsers();
+              fetchUsers(); // Refresh the user list
               toast.success("User approved successfully!");
             } else {
               toast.error("Failed to approve user.");
             }
+          })
+          .catch(() => {
+            toast.error("An error occurred. Please try again.");
+          })
+          .finally(() => {
+            // Remove the processing state for this user after request completes
+            setIsProcessing((prev) => ({ ...prev, [id]: false }));
           });
+      } else {
+        // If the confirmation is canceled, stop processing
+        setIsProcessing((prev) => ({ ...prev, [id]: false }));
       }
     });
   };
@@ -239,17 +252,6 @@ function Customer() {
                         >
                           <thead className="table-light text-muted">
                             <tr>
-                              <th scope="col" style={{ width: "50px;" }}>
-                                <div className="form-check">
-                                  <input
-                                    className="form-check-input"
-                                    type="checkbox"
-                                    id="checkAll"
-                                    value="option"
-                                  />
-                                </div>
-                              </th>
-
                               <th data-sort="customer_name">UserName</th>
                               <th data-sort="customer_name">Firstname</th>
                               <th data-sort="date">Lastname</th>
@@ -264,16 +266,6 @@ function Customer() {
                           <tbody className="list form-check-all">
                             {sortedUsers.map((item, index) => (
                               <tr key={index}>
-                                <th scope="row">
-                                  <div className="form-check">
-                                    <input
-                                      className="form-check-input"
-                                      type="checkbox"
-                                      name="chk_child"
-                                      value="option1"
-                                    />
-                                  </div>
-                                </th>
                                 <td className="id" style={{ display: "none" }}>
                                   <Link
                                     href="javascript:void(0);"
@@ -334,10 +326,15 @@ function Customer() {
                                       <button
                                         className="btn btn-success btn-sm"
                                         onClick={() => handleApprove(item._id)}
-                                        disabled={item.IsApproved}
+                                        disabled={
+                                          item.IsApproved ||
+                                          isProcessing[item._id]
+                                        }
                                       >
                                         {item.IsApproved
                                           ? "Approved"
+                                          : isProcessing[item._id]
+                                          ? "Processing..."
                                           : "Approve"}
                                       </button>
                                     </li>

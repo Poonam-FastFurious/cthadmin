@@ -3,11 +3,18 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Baseurl } from "../../Confige";
 import Swal from "sweetalert2";
+
 function Faqlist() {
   const [bloges, setBloges] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [blogsPerPage] = useState(5); // Adjust number of blogs per page
+  const [blogsPerPage] = useState(10); // Adjust number of blogs per page
+  const [selectedFAQ, setSelectedFAQ] = useState(null); // State to hold the selected FAQ for editing
+  const [updatedFAQ, setUpdatedFAQ] = useState({
+    question: "",
+    answer: "",
+    status: "",
+  });
 
   useEffect(() => {
     fetchBlogs();
@@ -55,6 +62,41 @@ function Faqlist() {
     });
   };
 
+  const handleEdit = (faq) => {
+    setSelectedFAQ(faq);
+    setUpdatedFAQ({
+      question: faq.question,
+      answer: faq.answer,
+      status: faq.status,
+    });
+  };
+
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    if (!selectedFAQ?._id) {
+      Swal.fire("Error!", "FAQ ID is required for updating.", "error");
+      return;
+    }
+    try {
+      const response = await fetch(`${Baseurl}/api/v1/faq/update`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id: selectedFAQ._id, ...updatedFAQ }),
+      });
+      if (!response.ok) {
+        throw new Error("Failed to update FAQ");
+      }
+      fetchBlogs(); // Refresh the list after update
+      Swal.fire("Updated!", "FAQ updated successfully.", "success");
+      setSelectedFAQ(null);
+    } catch (error) {
+      console.error("Error updating FAQ:", error);
+      Swal.fire("Error!", "Failed to update FAQ. Please try again.", "error");
+    }
+  };
+
   const filteredBlogs = bloges.filter((blog) =>
     blog.question.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -64,6 +106,7 @@ function Faqlist() {
   const indexOfFirstBlog = indexOfLastBlog - blogsPerPage;
   const currentBlogs = filteredBlogs.slice(indexOfFirstBlog, indexOfLastBlog);
   const totalPages = Math.ceil(filteredBlogs.length / blogsPerPage);
+
   return (
     <>
       <div className="main-content">
@@ -75,7 +118,6 @@ function Faqlist() {
                   <div className="card-header">
                     <h4 className="card-title mb-0">Manage, FAQ</h4>
                   </div>
-
                   <div className="card-body">
                     <div className="listjs-table" id="customerList">
                       <div className="row g-4 mb-3">
@@ -113,10 +155,8 @@ function Faqlist() {
                           <thead className="table-light">
                             <tr>
                               <th scope="col" style={{ width: "50px" }}></th>
-
                               <th data-sort="email">Question</th>
                               <th data-sort="phone">Answer</th>
-
                               <th data-sort="action">Action</th>
                             </tr>
                           </thead>
@@ -124,23 +164,17 @@ function Faqlist() {
                             {currentBlogs.map((blog, index) => (
                               <tr key={index}>
                                 <th scope="row"></th>
-                                <td className="id" style={{ display: "none" }}>
-                                  <Link
-                                    href="javascript:void(0);"
-                                    className="fw-medium link-primary"
-                                  >
-                                    #VZ2101
-                                  </Link>
-                                </td>
-
-                                <td className="email">{blog.question} </td>
-
+                                <td className="email">{blog.question}</td>
                                 <td className="date">{blog.answer}</td>
-
                                 <td>
                                   <div className="d-flex gap-2">
                                     <div className="edit">
-                                      <button className="btn btn-sm btn-success edit-item-btn">
+                                      <button
+                                        className="btn btn-sm btn-success edit-item-btn"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#EditshowModal"
+                                        onClick={() => handleEdit(blog)}
+                                      >
                                         Edit
                                       </button>
                                     </div>
@@ -215,6 +249,102 @@ function Faqlist() {
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          className="modal fade"
+          id="EditshowModal"
+          tabIndex="-1"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div className="modal-dialog modal-dialog-centered">
+            <div className="modal-content">
+              <div className="modal-header bg-light p-3">
+                <h5 className="modal-title" id="exampleModalLabel">
+                  Edit FAQ
+                </h5>
+                <button
+                  type="button"
+                  className="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                  id="close-modal"
+                ></button>
+              </div>
+              <form
+                className="tablelist-form"
+                autoComplete="off"
+                onSubmit={handleUpdate}
+              >
+                <div className="modal-body">
+                  <div className="mb-3">
+                    <label className="form-label" htmlFor="question">
+                      Question
+                    </label>
+                    <input
+                      type="text"
+                      id="question"
+                      className="form-control"
+                      value={updatedFAQ.question}
+                      onChange={(e) =>
+                        setUpdatedFAQ({
+                          ...updatedFAQ,
+                          question: e.target.value,
+                        })
+                      }
+                      required
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <label className="form-label" htmlFor="answer">
+                      Answer
+                    </label>
+                    <textarea
+                      id="answer"
+                      className="form-control"
+                      rows="3"
+                      value={updatedFAQ.answer}
+                      onChange={(e) =>
+                        setUpdatedFAQ({ ...updatedFAQ, answer: e.target.value })
+                      }
+                      required
+                    ></textarea>
+                  </div>
+                  <div className="mb-3">
+                    {/* <label className="form-label" htmlFor="status">
+                      Status
+                    </label> */}
+                    {/* <select
+                      id="status"
+                      className="form-select"
+                      value={updatedFAQ.status}
+                      onChange={(e) =>
+                        setUpdatedFAQ({ ...updatedFAQ, status: e.target.value })
+                      }
+                      required
+                    >
+                      <option value="" disabled>Select status</option>
+                      <option value="active">Active</option>
+                      <option value="inactive">Inactive</option>
+                    </select> */}
+                  </div>
+                </div>
+                <div className="modal-footer">
+                  <button
+                    type="button"
+                    className="btn btn-light"
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                  <button type="submit" className="btn btn-success">
+                    Save changes
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
         </div>

@@ -26,6 +26,7 @@ import EditBlogs from "./Pages/Blogs/EditBlogs";
 import Privacy from "./Pages/Settings/Privacy";
 import TermsandconList from "./Pages/Settings/TermsandconList";
 import Faqlist from "./Pages/Settings/Faqlist";
+import Testimonial from "./Pages/Settings/Testimonial";
 function App() {
   return (
     <>
@@ -57,6 +58,7 @@ function App() {
             <Route path="/addterms" element={<Termsandcondition />} />
             <Route path="/FAQ" element={<Faqlist />} />
             <Route path="/AddFAQ" element={<AddFAQ />} />
+            <Route path="/Testimonial" element={<Testimonial />} />
             <Route path="/Settings" element={<ProfileSettimgs />} />
           </Route>
         </Routes>

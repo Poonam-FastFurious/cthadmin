@@ -15,27 +15,36 @@ function Dashboard() {
     fetch(Baseurl + "/api/v1/user/alluser")
       .then((response) => response.json())
       .then((data) => {
-        setUsers(data.data);
-        setUserCount(data.data.length); // Set the user count here
+        // Sort users by createdAt in descending order
+        const sortedUsers = data.data.sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        );
+        setUsers(sortedUsers);
+        setUserCount(sortedUsers.length); // Set the user count here
       })
       .catch((error) => console.error("Error fetching users:", error));
   };
+
   const fetchblogs = () => {
     fetch(Baseurl + "/api/v1/blog/allblogs")
       .then((response) => response.json())
       .then((data) => {
         const blogData = data.data;
-        setBlogs(blogData);
-        const total = blogData.reduce((acc, blog) => acc + blog.views, 0);
+        // Sort blogs by createdAt in descending order
+        const sortedBlogs = blogData.sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        );
+        setBlogs(sortedBlogs);
+        const total = sortedBlogs.reduce((acc, blog) => acc + blog.views, 0);
         setTotalViews(total);
-        const totalCommentCount = blogData.reduce(
+        const totalCommentCount = sortedBlogs.reduce(
           (acc, blog) => acc + blog.comments.length,
           0
         );
         setTotalComments(totalCommentCount);
-        setBlogscount(data.data.length); // Set the user count here
+        setBlogscount(sortedBlogs.length); // Set the blog count here
       })
-      .catch((error) => console.error("Error fetching users:", error));
+      .catch((error) => console.error("Error fetching blogs:", error));
   };
 
   useEffect(() => {
@@ -57,10 +66,10 @@ function Dashboard() {
                         <div className="flex-grow-1">
                           <h4 className="fs-16 mb-1">Good Morning, Admin</h4>
                           <p className="text-muted mb-0">
-                            Here's what's happening with your store today.
+                            Here's what's happening with your Panel today.
                           </p>
                         </div>
-                        <div className="mt-3 mt-lg-0">
+                        {/* <div className="mt-3 mt-lg-0">
                           <form>
                             <div className="row g-3 mb-0 align-items-center">
                               <div className="col-sm-auto">
@@ -82,7 +91,7 @@ function Dashboard() {
                               <div className="col-auto"></div>
                             </div>
                           </form>
-                        </div>
+                        </div> */}
                       </div>
                     </div>
                   </div>
@@ -280,20 +289,6 @@ function Dashboard() {
                     <table className="table table-nowrap table-striped-columns mb-0">
                       <thead className="table-light">
                         <tr>
-                          <th scope="col">
-                            <div className="form-check">
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-                                value=""
-                                id="cardtableCheck"
-                              />
-                              <label
-                                className="form-check-label"
-                                htmlFor="cardtableCheck"
-                              ></label>
-                            </div>
-                          </th>
                           <th scope="col">Id</th>
                           <th scope="col">Customer</th>
                           <th scope="col">Customer Email</th>
@@ -303,22 +298,8 @@ function Dashboard() {
                         </tr>
                       </thead>
                       <tbody>
-                        {users.map((user, index) => (
+                        {users.slice(0, 20).map((user, index) => (
                           <tr key={index}>
-                            <td>
-                              <div className="form-check">
-                                <input
-                                  className="form-check-input"
-                                  type="checkbox"
-                                  value=""
-                                  id="cardtableCheck01"
-                                />
-                                <label
-                                  className="form-check-label"
-                                  htmlFor="cardtableCheck01"
-                                ></label>
-                              </div>
-                            </td>
                             <td>
                               <Link to="#" className="fw-semibold">
                                 #{user._id}

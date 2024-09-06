@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { Baseurl } from "../../Confige";
 import { useEffect, useState } from "react";
@@ -270,16 +269,6 @@ function Banner() {
                         >
                           <thead className="table-light">
                             <tr>
-                              <th scope="col" style={{ width: "50px" }}>
-                                <div className="form-check">
-                                  <input
-                                    className="form-check-input"
-                                    type="checkbox"
-                                    id="checkAll"
-                                    value="option"
-                                  />
-                                </div>
-                              </th>
                               <th data-sort="customer_name">Image</th>
                               <th data-sort="email">Title</th>
                               <th data-sort="phone">Place</th>
@@ -291,24 +280,6 @@ function Banner() {
                           <tbody className="list form-check-all">
                             {currentItems.map((item, index) => (
                               <tr key={index}>
-                                <th scope="row">
-                                  <div className="form-check">
-                                    <input
-                                      className="form-check-input"
-                                      type="checkbox"
-                                      name="chk_child"
-                                      value="option1"
-                                    />
-                                  </div>
-                                </th>
-                                <td className="id" style={{ display: "none" }}>
-                                  <Link
-                                    href="javascript:void(0);"
-                                    className="fw-medium link-primary"
-                                  >
-                                    #VZ2101
-                                  </Link>
-                                </td>
                                 <td className="customer_name">
                                   <div className="flex-shrink-0 me-2">
                                     <img

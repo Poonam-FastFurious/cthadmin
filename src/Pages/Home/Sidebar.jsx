@@ -300,6 +300,21 @@ function Sidebar() {
                         FAQ
                       </Link>
                     </li>
+                    <li className="nav-item">
+                      <Link
+                        to="/Testimonial"
+                        className="nav-link"
+                        data-key="t-chat"
+                        style={{
+                          backgroundColor:
+                            activeTab === "/Testimonial" ? "#CA9352" : "",
+                          color: activeTab === "/Testimonial" ? "white" : "",
+                          borderRadius: "6px",
+                        }}
+                      >
+                        Testimonial
+                      </Link>
+                    </li>
                   </ul>
                 </div>
               </li>

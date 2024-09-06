@@ -210,16 +210,6 @@ function Gallery() {
                         >
                           <thead className="table-light">
                             <tr>
-                              <th scope="col" style={{ width: "50px" }}>
-                                <div className="form-check">
-                                  <input
-                                    className="form-check-input"
-                                    type="checkbox"
-                                    id="checkAll"
-                                    value="option"
-                                  />
-                                </div>
-                              </th>
                               <th data-sort="customer_name">Image</th>
                               <th data-sort="email">Title</th>
                               <th data-sort="email">Status</th>
@@ -229,16 +219,6 @@ function Gallery() {
                           <tbody className="list form-check-all">
                             {currentItems.map((items, index) => (
                               <tr key={index}>
-                                <th scope="row">
-                                  <div className="form-check">
-                                    <input
-                                      className="form-check-input"
-                                      type="checkbox"
-                                      name="chk_child"
-                                      value="option1"
-                                    />
-                                  </div>
-                                </th>
                                 <td className="id" style={{ display: "none" }}>
                                   <Link
                                     href="javascript:void(0);"
