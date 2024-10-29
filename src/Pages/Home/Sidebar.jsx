@@ -315,6 +315,36 @@ function Sidebar() {
                         Testimonial
                       </Link>
                     </li>
+                    <li className="nav-item">
+                      <Link
+                        to="/Story"
+                        className="nav-link"
+                        data-key="t-chat"
+                        style={{
+                          backgroundColor:
+                            activeTab === "/Story" ? "#CA9352" : "",
+                          color: activeTab === "/Story" ? "white" : "",
+                          borderRadius: "6px",
+                        }}
+                      >
+                        Founder Story
+                      </Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link
+                        to="/Video-testimonial"
+                        className="nav-link"
+                        data-key="t-chat"
+                        style={{
+                          backgroundColor:
+                            activeTab === "/Video-testimonial" ? "#CA9352" : "",
+                          color: activeTab === "/Video-testimonial" ? "white" : "",
+                          borderRadius: "6px",
+                        }}
+                      >
+                       Video Testimonial
+                      </Link>
+                    </li>
                   </ul>
                 </div>
               </li>

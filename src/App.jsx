@@ -27,6 +27,8 @@ import Privacy from "./Pages/Settings/Privacy";
 import TermsandconList from "./Pages/Settings/TermsandconList";
 import Faqlist from "./Pages/Settings/Faqlist";
 import Testimonial from "./Pages/Settings/Testimonial";
+import VideoTestimonial from "./Pages/Settings/VideoTestimonial";
+import HappyCustomer from "./Pages/Settings/HappyCustomer";
 function App() {
   return (
     <>
@@ -59,6 +61,8 @@ function App() {
             <Route path="/FAQ" element={<Faqlist />} />
             <Route path="/AddFAQ" element={<AddFAQ />} />
             <Route path="/Testimonial" element={<Testimonial />} />
+            <Route path="/Story" element={<VideoTestimonial />} />
+            <Route path="/Video-testimonial" element={<HappyCustomer />} />
             <Route path="/Settings" element={<ProfileSettimgs />} />
           </Route>
         </Routes>
