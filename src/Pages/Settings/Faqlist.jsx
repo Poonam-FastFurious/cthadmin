@@ -23,7 +23,7 @@ function Faqlist() {
   const fetchBlogs = async () => {
     const response = await fetch(Baseurl + "/api/v1/faq/all");
     const data = await response.json();
-    setBloges(data.data);
+    setBloges(data.data||[]);
   };
 
   const handleDelete = async (id) => {

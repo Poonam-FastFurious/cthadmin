@@ -16,7 +16,7 @@ function ListBlog() {
   const fetchBlogs = async () => {
     const response = await fetch(Baseurl + "/api/v1/blog/allblogs");
     const data = await response.json();
-    setBloges(data.data);
+    setBloges(data.data || []);
   };
 
   const handleDelete = async (id) => {
