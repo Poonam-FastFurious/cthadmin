@@ -165,7 +165,7 @@ function Members() {
   };
 
   const filteredMembers = members.filter((member) =>
-    member.user.firstName.toLowerCase().includes(searchQuery.toLowerCase())
+    member.user?.firstName.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const indexOfLastItem = currentPage * itemsPerPage;
